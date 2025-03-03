@@ -6,7 +6,7 @@
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:49:03 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/02/27 12:36:11 by juan-ser         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:46:15 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,135 +17,193 @@
 #include <limits.h>
 #include <string.h>
 
-t_node *create_node(int value)
+int	ft_atoi(const char *str)
 {
-	t_node *new_node;
-
-	new_node = (t_node *)malloc(sizeof(t_node));
-	if (!new_node)
-		exit(1);
-	new_node->value = value;
-	new_node->index = 0;
-	new_node->next = NULL;
-	return (new_node);
-}
-
-void push_node(t_node **stack, t_node *new_node)
-{
-	if (!new_node)
-		return ;
-	new_node->next = *stack;
-	*stack = new_node;
-}
-
-int *copy_stack_to_array(t_node *stack, int *size)
-{
-	int count;
-	t_node *temp;
-	int i;
+	int	i;
+	int	sign;
+	int	result;
 	
-	count = 0;
-	temp = stack;
-	while(temp)
-	{
-		count++;
-		temp = temp->next;
-	}
-	*size = count;
-	int *array = (int *)malloc(sizeof(int) * count);
-	if (!array)
-		exit(1);
 	i = 0;
-	while(stack)
+	sign = 1;
+	while(str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
+		i++;
+	if(str[i] == '-' || str[i] == '+')
 	{
-		array[i++] = stack->value;
-		stack = stack->next;
+		if (str[i] == '-')
+			sign = -1;
+		i++;
 	}
-	return (array);
+	result = 0;
+	while(str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	return (sign * result);
 }
 
-void	swap_int(int *a, int *b)
+static void	ft_swap_int(int *a, int *b)
 {
-	int temp;
-
+	int	temp;
 	temp = *a;
 	*a = *b;
 	*b = temp;
 }
 
-int partition(int *array, int low, int high)
+static int	ft_partition(int arr[], int low, int high)
 {
-	int pivot;
-	int i;
-	int j;
-
-	pivot = array[high];
+	int	pivot;
+	int	i;
+	int	j;
+	
+	pivot = arr[high];
 	i = low - 1;
 	j = low;
-	while (j < high)
+	while(j < high)
 	{
-		if (array[j] < pivot)
-			swap_int(&array[++i], &array[j]);
+		if(arr[j] < pivot)
+		{
+			i++;
+			ft_swap_int(&arr[i], &arr[j]);
+		}
 		j++;
 	}
-	swap_int(&array[i + 1], &array[high]);
+	ft_swap_int(&arr[i + 1], &arr[high]);
 	return (i + 1);
 }
 
-void quick_sort(int *array, int low, int high)
+static void	ft_qsort(int arr[], int low, int high)
 {
-	int pi;
-
+	int	pi;
 	if (low < high)
 	{
-		pi = partition(array, low, high);
-		quick_sort(array, low, pi - 1);
-		quick_sort(array, pi + 1, high);
+		pi = ft_partition(arr, low, high);
+		ft_qsort(arr, low, pi - 1);
+		ft_qsort(arr, pi + 1, high);
 	}
 }
 
-void print_array(int *array, int size)
+static char	*ft_itoa_hex(unsigned int num)
 {
-	int i;
+	char	*hex_digits;
+	char	buffer[9];
+	int		i;
+	char	*result;
+	int		j;
 
-	i = 0;
-	while (i < size)
+	hex_digits= "0123456789ABCDEF";
+	i = 8;
+
+	buffer[i] = '\0';
+	if(num == 0)
+		buffer[--i] = '0';
+	while(num)
 	{
-		printf("%d ", array[i]);
+		buffer[--i] = hex_digits[num % 16];
+		num /= 16;
+	}
+	result = malloc(9 - i);
+	if(!result)
+		exit(1);
+	j = 0;
+	while(buffer[i])
+		result[j++] = buffer[i++];
+	result[j] = '\0';
+	return (result);
+}
+
+static char	**ft_assign_index_hex(int original[], int sorted[], int n)
+{
+	char **index;
+	int	i;
+	int	j;
+	
+	index = malloc(n * sizeof(char *));
+	if(!index)
+		exit(1);
+	i = 0;
+	while(i < n)
+	{
+		j = 0;
+		while(j < n)
+		{
+			if(original[i] == sorted[j])
+				break;
+			j++;
+		}
+		index[i] = ft_itoa_hex((unsigned int)j);
+		i++;
+	}
+	return (index);
+}
+
+static void	ft_print_index_hex(char **index, int n)
+{
+	int	i;
+	i = 0;
+	while(i < n)
+	{
+		printf("%s ", index[i]);
 		i++;
 	}
 	printf("\n");
 }
-void free_stack(t_node *stack)
-{
-	t_node *temp;
 
-	while (stack)
+static void free_index(char **index, int n)
+{
+	int	i;
+
+	i = 0;
+	while(i < n)
 	{
-		temp = stack;
-		stack = stack->next;
-		free(temp);
+		free(index[i]);
+		i++;
 	}
+	free(index);
+}
+
+static void ft_print_array(int arr[], int size)
+{
+	int i;
+	i = 0;
+	while(i < size)
+	{
+		printf("%d ", arr[i]);
+		i++;
+	}
+	printf("\n");
 }
 
 int main(void)
 {
-	t_node *stack = NULL;
+    int original[] = {50, 20, 40, 10, 30, 1, 1241, 12511, 67, 2563, 123, 234, 32, 23423, 23, 56, 5665};
+    long long int n = 20;
+    int i;
+    
+    int *sorted = malloc(n * sizeof(int));
+    if (!sorted)
+        exit(1);
+    for (i = 0; i < n; i++)
+        sorted[i] = original[i];
+    
+    ft_qsort(sorted, 0, n - 1);
+    
+    printf("Arreglo desordenado :\n");
+    for (i = 0; i < n; i++)
+        printf("%d ", original[i]);
+    printf("\n");
 	
-	push_node(&stack, create_node(333));
-	push_node(&stack, create_node(2));
-	push_node(&stack, create_node(15));
-	int size;
-	int *array = copy_stack_to_array(stack, &size);
-	
-	printf("Array:\n");
-	print_array(array, size);
+    printf("Arreglo ordenado (copia):\n");
+    for (i = 0; i < n; i++)
+        printf("%d ", sorted[i]);
+    printf("\n");
 
-	quick_sort(array, 0, size - 1);
-	
-	printf("Sorted Array:\n");
-	print_array(array, size);
-
-	free(array);
-	free_stack(stack);
+    char **hex_indices = ft_assign_index_hex(original, sorted, n);
+    
+    printf("Índices en hexadecimal:\n");
+    ft_print_index_hex(hex_indices, n);
+    
+    free(sorted);
+    free_index(hex_indices, n);
+    return 0;
 }
