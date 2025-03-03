@@ -1,15 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   basic_operations.c                                 :+:      :+:    :+:   */
+/*   printable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 13:43:46 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/03/03 13:45:36 by juan-ser         ###   ########.fr       */
+/*   Created: 2025/03/03 14:37:51 by juan-ser          #+#    #+#             */
+/*   Updated: 2025/03/03 16:18:32 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-push_a, push_b, rotate_a, rotate_b, reverse_rotate_a, reverse_rotate_b, determinar numero de digitos hex, implementar R.Sort;
+void ft_print_stack(int *stack, int size)
+{
+	int	i;
+
+	i  = 0;
+	while(i < size)
+	{
+		printf("%d ", stack[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+void	ft_print_index_hex(char **index, int n)
+{
+	int	i;
+	i = 0;
+	while(i < n)
+	{
+		printf("%s ", index[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+void ft_print_array(int arr[], int size)
+{
+	int i;
+	i = 0;
+	while(i < size)
+	{
+		printf("%d ", arr[i]);
+		i++;
+	}
+	printf("\n");
+}
