@@ -6,7 +6,7 @@
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:49:03 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/03/03 16:03:16 by juan-ser         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:06:55 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_swap_int(int *a, int *b)
 
 int	ft_partition(int arr[], int low, int high)
 {
-	int	pivot;
+	long long int	pivot;
 	int	i;
 	int	j;
 	
@@ -73,35 +73,25 @@ int	ft_partition(int arr[], int low, int high)
 	return (i + 1);
 }
 
-char	*ft_itoa_hex(unsigned int num)
+char *ft_itoa_hex(unsigned int num)
 {
-	char	*hex_digits;
-	char	buffer[9];
-	int		i;
-	char	*result;
-	int		j;
+    char    *str;
+    int     len;
+    unsigned int    tmp;
 
-	hex_digits= "0123456789ABCDEF";
-	i = 8;
-	buffer[i] = '\0';
-	if(num == 0)
-		buffer[--i] = '0';
-	while(num > 0)
-	{
-		buffer[--i] = hex_digits[num % 16];
-		num /= 16;
-	}
-	result = malloc(9 - i);
-	if(!result)
-	{
-		perror("Error de asignación de memoria");
-		exit(1);
-	}
-	j = 0;
-	while(buffer[i])
-		result[j++] = buffer[i++];
-	result[j] = '\0';
-	return (result);
+    len = 1;
+    tmp = num;
+    while (tmp /= 16)
+        len++;
+    str = malloc(len + 1);
+    if (!str)
+        return (NULL);
+    str[len] = '\0';
+    while (len--) {
+        str[len] = "0123456789abcdef"[num % 16];
+        num /= 16;
+    }
+    return (str);
 }
 
 void free_index(char **index, int n)
@@ -117,4 +107,23 @@ void free_index(char **index, int n)
 		i++;
 	}
 	free(index);
+}
+
+void	*ft_memcpy(void *dest, const void *src, size_t num)
+{
+	unsigned char	*aux_src;
+	unsigned char	*aux_dest;
+	size_t			i;
+
+	aux_src = (unsigned char *)src;
+	aux_dest = (unsigned char *)dest;
+	i = 0;
+	if (num == 0 || dest == src)
+		return (dest);
+	while (i < num)
+	{
+		aux_dest[i] = aux_src[i];
+		i++;
+	}
+	return (dest);
 }
