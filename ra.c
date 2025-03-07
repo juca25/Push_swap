@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printable.c                                        :+:      :+:    :+:   */
+/*   ra.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 14:37:51 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/03/07 11:48:32 by juan-ser         ###   ########.fr       */
+/*   Created: 2025/03/07 11:41:02 by juan-ser          #+#    #+#             */
+/*   Updated: 2025/03/07 12:48:43 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void ft_print_stack(int *stack, int size)
+void op_ra(char **stack, int *size)
 {
-	int	i;
-
-	i  = 0;
-	while(i < size)
+	char *temp = stack[0];
+	int i = 0;
+	while (i < *size - 1)
 	{
-		printf("%d ", stack[i]);
+		stack[i] = stack[i + 1];
 		i++;
 	}
-	printf("\n");
-}
-void ft_print_stack_hex(int *stack, int size)
-{
-	int	i;
-
-	i  = 0;
-	while(i < size)
-	{
-		printf("%X ", stack[i]);
-		i++;
-	}
-	printf("\n");
+	stack[*size - 1] = temp;
+	printf("ra\n");
 }

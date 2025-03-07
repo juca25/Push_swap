@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printable.c                                        :+:      :+:    :+:   */
+/*   rotate_no_print.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 14:37:51 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/03/07 11:48:32 by juan-ser         ###   ########.fr       */
+/*   Created: 2025/03/07 12:23:07 by juan-ser          #+#    #+#             */
+/*   Updated: 2025/03/07 12:52:59 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void ft_print_stack(int *stack, int size)
+void rotate_no_print(char **stack, int *size)
 {
-	int	i;
-
-	i  = 0;
-	while(i < size)
-	{
-		printf("%d ", stack[i]);
-		i++;
-	}
-	printf("\n");
-}
-void ft_print_stack_hex(int *stack, int size)
-{
-	int	i;
-
-	i  = 0;
-	while(i < size)
-	{
-		printf("%X ", stack[i]);
-		i++;
-	}
-	printf("\n");
+    char *temp = stack[0];
+    int i = 0;
+    while (i < *size - 1)
+    {
+        stack[i] = stack[i + 1];
+        i++;
+    }
+    stack[*size - 1] = temp;
 }

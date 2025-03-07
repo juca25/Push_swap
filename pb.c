@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printable.c                                        :+:      :+:    :+:   */
+/*   pb.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 14:37:51 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/03/07 11:48:32 by juan-ser         ###   ########.fr       */
+/*   Created: 2025/03/07 11:42:42 by juan-ser          #+#    #+#             */
+/*   Updated: 2025/03/07 12:48:32 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void ft_print_stack(int *stack, int size)
+void op_pb(char **stackA, int *sizeA, char **stackB, int *sizeB)
 {
-	int	i;
-
-	i  = 0;
-	while(i < size)
+	char *value = stackA[0];
+	int i = 0;
+	while (i < *sizeA - 1)
 	{
-		printf("%d ", stack[i]);
+		stackA[i] = stackA[i + 1];
 		i++;
 	}
-	printf("\n");
-}
-void ft_print_stack_hex(int *stack, int size)
-{
-	int	i;
-
-	i  = 0;
-	while(i < size)
+	(*sizeA)--;
+	i = *sizeB;
+	while (i > 0)
 	{
-		printf("%X ", stack[i]);
-		i++;
+		stackB[i] = stackB[i - 1];
+		i--;
 	}
-	printf("\n");
+	stackB[0] = value;
+	(*sizeB)++;
+	printf("pb\n");
 }

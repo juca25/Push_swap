@@ -1,16 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   index_functions.c                                  :+:      :+:    :+:   */
+/*   convert_index.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 14:21:23 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/03/06 17:47:26 by juan-ser         ###   ########.fr       */
+/*   Created: 2025/03/07 12:38:51 by juan-ser          #+#    #+#             */
+/*   Updated: 2025/03/07 12:40:02 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+long long int ft_partition(int arr[], int low, int high)
+{
+	int pivot = arr[high], i = low - 1, j = low, tmp;
+	while (j < high)
+	{
+		if (arr[j] <= pivot)
+		{
+			i++;
+			tmp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = tmp;
+		}
+		j++;
+	}
+	tmp = arr[i + 1];
+	arr[i + 1] = arr[high];
+	arr[high] = tmp;
+	return (i + 1);
+}
 
 void ft_qsort(int arr[], int low, int high)
 {

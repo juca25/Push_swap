@@ -6,7 +6,7 @@
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:49:03 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/03/06 15:06:55 by juan-ser         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:39:56 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,6 @@ void	ft_swap_int(int *a, int *b)
 	temp = *a;
 	*a = *b;
 	*b = temp;
-}
-
-int	ft_partition(int arr[], int low, int high)
-{
-	long long int	pivot;
-	int	i;
-	int	j;
-	
-	if(arr == NULL)
-		return -1;
-	pivot = arr[high];
-	i = low - 1;
-	j = low;
-	while(j < high)
-	{
-		if(arr[j] < pivot)
-		{
-			i++;
-			ft_swap_int(&arr[i], &arr[j]);
-		}
-		j++;
-	}
-	ft_swap_int(&arr[i + 1], &arr[high]);
-	return (i + 1);
 }
 
 char *ft_itoa_hex(unsigned int num)
