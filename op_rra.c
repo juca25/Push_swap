@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bubble_sort.c                                      :+:      :+:    :+:   */
+/*   op_rra.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 14:32:43 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/03/12 14:32:43 by juan-ser         ###   ########.fr       */
+/*   Created: 2025/03/12 16:39:28 by juan-ser          #+#    #+#             */
+/*   Updated: 2025/03/12 16:39:28 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void bubble_sort(int *arr, int n)
+void op_rra(int *stackA, int *sizeA)
 {
-    int i = 0, j, temp;
-    while(i < n - 1)
+    if (stackA == NULL || *sizeA < 2)
+        return;
+    
+    int temp = stackA[*sizeA - 1];
+    int i = *sizeA - 1;
+    
+    while (i > 0)
     {
-        j = 0;
-        while(j < n - i - 1)
-        {
-            if(arr[j] > arr[j+1])
-            {
-                temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
-            }
-            j++;
-        }
-        i++;
+        stackA[i] = stackA[i - 1];  // Desplaza todos los elementos hacia la derecha
+        i--;
     }
+    
+    stackA[0] = temp;  // Coloca el último elemento al principio
+    printf("rra\n");
 }

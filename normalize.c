@@ -6,12 +6,11 @@
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 11:29:46 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/03/07 11:33:54 by juan-ser         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:33:28 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
 
 void	copy_array(int *src, int *dest, int size)
 {

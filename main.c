@@ -6,7 +6,7 @@
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 11:51:20 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/03/07 13:19:58 by juan-ser         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:48:00 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,37 @@
 
 int main(int ac, char **av)
 {
-	int n = ac - 1, i;
-	int *arr = malloc(n * sizeof(int));
-	if (!arr)
-		ft_error();
-	i = 0;
-	while (i < n)
-	{
-		arr[i] = atoi(av[i + 1]);
-		i++;
-	}
-	/* Obtiene los índices en hexadecimal */
-	char **stackA = ft_assign_index_hex(arr, n);
-	char **stackB = malloc(n * sizeof(char *));
-	if (!stackB)
-		ft_error();
-	/* sizes[0] = tamaño de A, sizes[1] = tamaño de B */
-	int sizes[2] = { n, 0 };
-	int max_len = get_max_len(stackA, sizes[0]);
-	radix_sort_hex_str(stackA, stackB, sizes, max_len);
-	/* No se imprime el resultado final, solo las instrucciones */
-	free(arr);
-	free(stackA);
-	free(stackB);
-	return 0;
+    int n, i;
+    int *arr, *norm;
+    
+    if (ac < 2)
+        return 0;
+    n = ac - 1;
+    arr = malloc(n * sizeof(int));
+    if (!arr)
+        ft_error();
+    i = 0;
+    while(i < n)
+    {
+        arr[i] = ft_atoi(av[i+1]);
+        i++;
+    }
+    // Normaliza el array: ahora los valores estarán entre 0 y n-1
+    norm = normalize(arr, n);
+    
+    // Usa 'norm' como stackA en chunk sort.
+    int *stackA = norm;
+    int sizeA = n, sizeB = 0;
+    int *stackB = malloc(n * sizeof(int));
+    if (!stackB)
+        ft_error();
+    // Ajusta el chunk según la cantidad de números
+    int chunk_size = 33; // 500 números -> ~15 chunks de 33 elementos
+    chunk_sort(stackA, &sizeA, stackB, &sizeB);
+    push_back(stackA, &sizeA, stackB, &sizeB);
+    
+    free(stackB);
+    free(norm);
+    free(arr);
+    return 0;
 }
