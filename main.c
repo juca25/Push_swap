@@ -6,45 +6,35 @@
 /*   By: juan-ser <juan-ser@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 11:51:20 by juan-ser          #+#    #+#             */
-/*   Updated: 2025/03/12 16:48:00 by juan-ser         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:59:14 by juan-ser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int main(int ac, char **av)
-{
-    int n, i;
-    int *arr, *norm;
-    
-    if (ac < 2)
-        return 0;
-    n = ac - 1;
-    arr = malloc(n * sizeof(int));
-    if (!arr)
-        ft_error();
-    i = 0;
-    while(i < n)
-    {
-        arr[i] = ft_atoi(av[i+1]);
+void print_stack(int *stack, int size) {
+    int i = 0;
+    printf("\nStack ordenado:\n");
+    while (i < size) {
+        printf("%d ", stack[i]);
         i++;
     }
-    // Normaliza el array: ahora los valores estarán entre 0 y n-1
-    norm = normalize(arr, n);
-    
-    // Usa 'norm' como stackA en chunk sort.
-    int *stackA = norm;
+    printf("\n");
+}
+
+int main(int argc, char **argv) {
+    int *arr, n, i;
+    parse_and_validate(argc, argv, &arr, &n);
+    int *stackA = arr;  // Usamos los valores originales
     int sizeA = n, sizeB = 0;
     int *stackB = malloc(n * sizeof(int));
     if (!stackB)
         ft_error();
-    // Ajusta el chunk según la cantidad de números
-    int chunk_size = 33; // 500 números -> ~15 chunks de 33 elementos
-    chunk_sort(stackA, &sizeA, stackB, &sizeB);
+    int num_chunks = (n == 100) ? 5 : (n == 500) ? 10 : 15;
+    chunk_sort(stackA, &sizeA, stackB, &sizeB, n, num_chunks);
     push_back(stackA, &sizeA, stackB, &sizeB);
-    
+    print_stack(stackA, sizeA);
     free(stackB);
-    free(norm);
     free(arr);
     return 0;
 }
